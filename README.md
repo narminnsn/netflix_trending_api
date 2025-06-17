@@ -96,7 +96,7 @@ GET /v1/title/{id}/engagement
 
 ## 3 · What to ship
 
-Write a **production-grade** backend service with the **best‑quality code you can** within a reasonable time‑box (we expect 4‑6 hours in total, but feel free to stop whenever you are happy with the result).
+Write a **production-grade**, high performance backend service with the **best‑quality code you can** within a reasonable time‑box (we expect 4‑6 hours in total, but feel free to stop whenever you are happy with the result).
 
 ## 4 · Submission
 
