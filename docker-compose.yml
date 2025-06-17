@@ -1,0 +1,13 @@
+name: netflixdb
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: netflixdb
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./netflixdb-mysql.sql:/docker-entrypoint-initdb.d/01_seed.sql:ro
