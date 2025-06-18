@@ -28,7 +28,7 @@
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/narminnsn/probit_app.git
+git clone https://github.com/narminnsn/netflix_trending_api.git
 cd your_repo_name
 ```
 
