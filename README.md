@@ -1,105 +1,83 @@
-# Netflix “Trending Titles” API Challenge
+# Netflix Trending Api
 
-Welcome – here’s a self‑contained exercise that lets you demonstrate back‑end design, data‑access skills.
+## Table of Contents
+- [Technologies](#technologies)
+- [Installation](#installation)
+- [API Usage](#api-usage)
+- [Testing](#testing)
 
-## 1 · Background
+## Technologies
 
-StreamScout is a proprietary service used by editorial analysts and media research partners to surface Netflix viewing trends, specifically tailored for journalistic and critical reporting. Two screens drive almost all traffic:
+- Python
+- FastAPI
+- MySQL
+- Docker
+- PyTest
 
-1. **Top‑10 Explorer** – shows the current Top‑10 titles (movies and TV‑show seasons) for any language locale.
+## Installation
 
-2. **Engagement Timeline** – given a title, shows how many hours it was viewed each week and how its rank moved over time.
+### Prerequisites
 
-An analyst dataset (based on Netflix’s public Weekly Top 10 and Engagement Report) has already been loaded into MySQL for you.
+- Docker
+- Docker Compose
+- Git
+- Python
 
-| table        | purpose                          | key columns                                                                                                  |
-| ------------ | -------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| movie        | movie metadata                   | id, title, locale, release_date, runtime                                                                     |
-| tv_show      | series‑level metadata            | id, title, locale                                                                                            |
-| season       | season metadata                  | id, tv_show_id, season_number, release_date, runtime                                                         |
-| view_summary | pre‑aggregated viewing snapshots | duration (WEEKLY / SEMI_ANNUALLY), start_date, end_date, view_rank, hours_viewed, views, movie_id, season_id |
+## Setup
 
-This repo contains a docker-compose file which can spin up a local MySQL database containing all the data relevant to this assignment, which can be spun up using the command:
+### 1. Clone the Repository
 
-```sh
-$ docker compose up
+```bash
+git clone https://github.com/narminnsn/probit_app.git
+cd your_repo_name
 ```
 
-## 2 · Your task
+### 2. Environment Variables
+Create a .env file in the root directory with the following content:
 
-Build a small back‑end service that exposes the two HTTP endpoints.
+- MYSQL_USER=mysql
+- MYSQL_PASSWORD=mysql
+- MYSQL_DB=netflixdb
+- MYSQL_HOST=localhost
+- MYSQL_PORT=3306
 
-### 2.1 Endpoint A – Top 10 list
+### 3. Starting Docker
 
-```
-GET /v1/top10
-```
-
-| Query parameter | Required | Example                               | Notes                                                                      |
-| --------------- | -------- | ------------------------------------- | -------------------------------------------------------------------------- |
-| `locale`        | yes      | `en`                                  | Language/market of interest                                                |
-| `window`        | no       | `WEEKLY` (default) / `SEMI_ANNUALLY`  |                                                                            |
-| `as_of`         | no       | `2025‑05‑12`                          | ISO date – if omitted, use the latest date available for the chosen window |
-| `include`       | no       | `movie` / `season` / `both` (default) |                                                                            |
-
-**Response** (JSON array ordered by view_rank):
-
-```json
-[
-  {
-    "id": 123,
-    "type": "movie",              // "movie" or "season"
-    "title": "Damsel",
-    "view_rank": 1,
-    "hours_viewed": 83472000,
-    "views": 47000000,
-    "runtime": 108
-  },
-  … up to 10 objects …
-]
+```bash
+docker-compose up
 ```
 
-### 2.2 Endpoint B – Engagement timeline
+### 4. Virtual Environment
 
-```
-GET /v1/title/{id}/engagement
-```
+```bash
+python3 -m venv .venv
 
-| Query parameter | Required | Example      | Notes                                                  |
-| --------------- | -------- | ------------ | ------------------------------------------------------ |
-| `from`          | no       | `2024‑01‑01` | Earliest week to return (defaults to first week in DB) |
-| `to`            | no       | `2025‑06‑02` | Latest week to return (defaults to last week in DB)    |
+source .venv/bin/activate
 
-**Response** (weekly buckets, ascending date):
-
-```json
-{
-  "id": 567,
-  "type": "season",
-  "title": "Bridgerton • S2",
-  "timeline": [
-    {
-      "start_date": "2025‑04‑21",
-      "hours_viewed": 32800000,
-      "views": 18200000,
-      "view_rank": 3
-    },
-    {
-      "start_date": "2025‑04‑28",
-      "hours_viewed": 21000000,
-      "views": 12000000,
-      "view_rank": 7
-    }
-  ]
-}
+pip install -r requirements.txt
 ```
 
-## 3 · What to ship
 
-Write a **production-grade**, high performance backend service with the **best‑quality code you can** within a reasonable time‑box (we expect 4‑6 hours in total, but feel free to stop whenever you are happy with the result).
+### 5. Running Application
 
-## 4 · Submission
+```bash
+uvicorn app.main:app --reload
 
-Push your work to a public or private Git repository and share the link, or send us a zip/tarball. That’s it – we’ll run it, read the code, and take it from there.
+```
 
-Have fun – we’re looking forward to seeing your craftsmanship!
+
+# API Documentation
+
+For detailed API documentation, visit:
+
+- Swagger: http://localhost:8000/docs
+- Redoc: http://localhost:8000/redoc
+
+# Testing
+
+You can run tests:
+
+```bash
+python -m pytest
+
+```
