@@ -29,7 +29,7 @@
 
 ```bash
 git clone https://github.com/narminnsn/netflix_trending_api.git
-cd your_repo_name
+cd netflix_trending_api
 ```
 
 ### 2. Environment Variables
